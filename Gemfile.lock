@@ -5,6 +5,7 @@ GEM
     line-bot-api (1.25.0)
     mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
+    puma (3.12.6)
     rack (2.2.4)
     rack-protection (2.2.2)
       rack
@@ -22,6 +23,7 @@ PLATFORMS
 DEPENDENCIES
   dotenv
   line-bot-api
+  puma (~> 3.7)
   sinatra
 
 RUBY VERSION
