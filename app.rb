@@ -29,7 +29,7 @@ def command?(message)
 end
 
 def parameter(message)
-    message.split(/[[:blank:]]/).shift(1)
+    message.split(/[[:blank:]]/).shift()
 end
 
 
@@ -47,6 +47,8 @@ post '/callback' do
         return "not message" unless event.is_a?(Line::Bot::Event::Message)
         return "not text" unless event.type === Line::Bot::Event::MessageType::Text
         return "not command" unless command?(event.message['text'])
+
+        p event.message['text']
 
         query = parameter(event.message['text']).join(' ')
 
