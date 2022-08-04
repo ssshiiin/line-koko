@@ -13,7 +13,7 @@ def client
 end
 
 def command?(message)
-    message.str[0] == 'ココ'
+    message.split[0] == 'ココ'
 end
 
 post '/callback' do
