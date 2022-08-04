@@ -57,7 +57,7 @@ post '/callback' do
         return "not text" unless event.type === Line::Bot::Event::MessageType::Text
         return "not command" unless command?(event.message['text'])
 
-        if parameter(event.message['text']).empty? do
+        if parameter(event.message['text']).empty? then
             reply(event, "くーん")
             return
         end
