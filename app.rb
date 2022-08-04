@@ -66,6 +66,8 @@ post '/callback' do
 
         search_result = search_image_url(query)
 
+        p search_result
+
         image = {
             "type": "image",
             "originalContentUrl": search_result,
