@@ -53,10 +53,12 @@ post '/callback' do
         return "not text" unless event.type === Line::Bot::Event::MessageType::Text
         return "not command" unless command?(event.message['text'])
 
+        search_result = getImageUrl('長岡花火')
+
         image = {
             "type": "image",
-            "originalContentUrl": getImageUrl('長岡花火'),
-            "previewImageUrl": getImageUrl('長岡花火')
+            "originalContentUrl": search_result,
+            "previewImageUrl": search_result
         }
         client.reply_message(event['replyToken'], image)
     end
