@@ -13,12 +13,14 @@ def client
     }
 end
 
+
 def getImageUrl(query)
-    searcher = Google::Apis::CustomsearchV1::CustomSearchAPIService.new
+    Customsearch = Google::Apis::CustomsearchV1
+    searcher = Customsearch::CustomSearchAPIService.new
     searcher.key = ENV["CUSTOM_SEARCH_API"]
 
 
-    results = searcher.list_cses(q: query, cx: CSE_ID, search_type: "image", num: 1, sort: "review-rating:d:s,review-pricerange:d:w")
+    results = searcher.list_cses(q: query, cx: ENV["SEARCH_ENGINE"], search_type: "image", num: 1, sort: "review-rating:d:s,review-pricerange:d:w")
     items = results.items
     items.first.link
 end
