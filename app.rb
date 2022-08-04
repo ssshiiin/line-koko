@@ -2,6 +2,7 @@
 require 'sinatra'
 require 'line/bot'
 require 'dotenv'
+require 'google/apis/customsearch_v1'
 Dotenv.load ".env"
 
 def client
@@ -12,8 +13,31 @@ def client
     }
 end
 
+def flick_raw_setup
+    FlickRaw.api_key = ENV('FLICK_RAW_API_KEY')
+    FlickRaw.shared_secret = ENV('FLICK_RAW_SHARED_SECRET')
+end
+
+def getImageUrl(query)
+    API_KEY = ENV["CUSTOM_SEARCH_API"]
+    CSE_ID = ENV["SEARCH_ENGINE"]
+
+    Customsearch = Google::Apis::CustomsearchV1
+    searcher = Customsearch::CustomSearchAPIService.new
+    searcher.key = API_KEY
+
+
+    results = searcher.list_cses(q: query, cx: CSE_ID, search_type: "image", num: 1, sort: "review-rating:d:s,review-pricerange:d:w")
+    items = results.items
+    items.first.link
+end
+
 def command?(message)
     message.split(/[[:blank:]]/)[0] == 'ココ'
+end
+
+def search_image?(search_word)
+    google_image_scraper search_word 1
 end
 
 post '/callback' do
@@ -29,11 +53,12 @@ post '/callback' do
         return "not text" unless event.type === Line::Bot::Event::MessageType::Text
         return "not command" unless command?(event.message['text'])
 
-        message = {
-            type: 'text',
-            text: event.message['text']
+        image = {
+            "type": "image",
+            "originalContentUrl": getImageUrl('長岡花火'),
+            "previewImageUrl": getImageUrl('長岡花火')
         }
-        client.reply_message(event['replyToken'], message)
+        client.reply_message(event['replyToken'], image)
     end
     "OK"
 end
