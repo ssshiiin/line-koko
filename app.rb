@@ -14,9 +14,8 @@ def client
 end
 
 
-def getImageUrl(query)
-    Customsearch = Google::Apis::CustomsearchV1
-    searcher = Customsearch::CustomSearchAPIService.new
+def search_image_url(query)
+    searcher = Google::Apis::CustomsearchV1::CustomSearchAPIService.new
     searcher.key = ENV["CUSTOM_SEARCH_API"]
 
 
@@ -46,7 +45,7 @@ post '/callback' do
         return "not text" unless event.type === Line::Bot::Event::MessageType::Text
         return "not command" unless command?(event.message['text'])
 
-        search_result = getImageUrl('長岡花火')
+        search_result = search_image_url("花火")
 
         image = {
             "type": "image",
