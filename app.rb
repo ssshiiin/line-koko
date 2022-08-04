@@ -13,7 +13,7 @@ def client
 end
 
 def command?(message)
-    message..split(/[[:blank:]]/)[0] == 'ココ'
+    message.split(/[[:blank:]]/)[0] == 'ココ'
 end
 
 post '/callback' do
