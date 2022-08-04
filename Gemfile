@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-# gem "rails"
+ruby "2.5.1"
 gem 'line-bot-api'
 gem 'sinatra'
 gem 'dotenv'
