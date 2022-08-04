@@ -29,7 +29,7 @@ def command?(message)
 end
 
 def parameter(message)
-    message.split(/[[:blank:]]/).shift()
+    message.split(/[[:blank:]]/).drop(1)
 end
 
 
