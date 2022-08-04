@@ -13,18 +13,9 @@ def client
     }
 end
 
-def flick_raw_setup
-    FlickRaw.api_key = ENV('FLICK_RAW_API_KEY')
-    FlickRaw.shared_secret = ENV('FLICK_RAW_SHARED_SECRET')
-end
-
 def getImageUrl(query)
-    API_KEY = ENV["CUSTOM_SEARCH_API"]
-    CSE_ID = ENV["SEARCH_ENGINE"]
-
-    Customsearch = Google::Apis::CustomsearchV1
-    searcher = Customsearch::CustomSearchAPIService.new
-    searcher.key = API_KEY
+    searcher = Google::Apis::CustomsearchV1::CustomSearchAPIService.new
+    searcher.key = ENV["CUSTOM_SEARCH_API"]
 
 
     results = searcher.list_cses(q: query, cx: CSE_ID, search_type: "image", num: 1, sort: "review-rating:d:s,review-pricerange:d:w")
