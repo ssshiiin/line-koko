@@ -32,6 +32,15 @@ def parameter(message)
     message.split(/[[:blank:]]/).drop(1)
 end
 
+def reply(event, x)
+    message = {
+        "type": "text",
+        "text": x
+    }
+    client.reply_message(event['replyToken'], message)
+end
+
+
 
 # controller
 post '/callback' do
@@ -48,11 +57,12 @@ post '/callback' do
         return "not text" unless event.type === Line::Bot::Event::MessageType::Text
         return "not command" unless command?(event.message['text'])
 
-        p event.message['text']
+        if parameter(event.message['text']).empty? do
+            reply(event, "くーん")
+            return
+        end
 
         query = parameter(event.message['text']).join(' ')
-
-        p query
 
         search_result = search_image_url(query)
 
@@ -61,6 +71,7 @@ post '/callback' do
             "originalContentUrl": search_result,
             "previewImageUrl": search_result
         }
+
         client.reply_message(event['replyToken'], image)
     end
     "OK"
