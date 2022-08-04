@@ -17,7 +17,7 @@ get '/' do
 end
 
 post '/callback' do
-    p ENV["LINE_CHANNEL_ID"]
+    "OK"
 end
 
 # post '/callback' do
