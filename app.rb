@@ -25,9 +25,9 @@ post '/callback' do
 
     events = client.parse_events_from(body)
     events.each do |event|
-        unless event.is_a?(Line::Bot::Event::Message) return "not message"
-        unless event.type === Line::Bot::Event::MessageType::Text return "not text"
-        unless command?(event.message) return "not command"
+        return "not message" unless event.is_a?(Line::Bot::Event::Message)
+        return "not text" unless event.type === Line::Bot::Event::MessageType::Text
+        return "not command" unless command?(event.message)
 
         message = {
             type: 'text',
