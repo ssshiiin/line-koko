@@ -28,11 +28,14 @@ def command?(message)
     message.split(/[[:blank:]]/)[0] == 'ココ'
 end
 
-def search_image?(search_word)
-    google_image_scraper search_word 1
+def parameter(message)
+    message.split(/[[:blank:]]/).shift(1)
 end
 
+
+# controller
 post '/callback' do
+    # validate
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
     unless client.validate_signature(body, signature)
@@ -45,7 +48,9 @@ post '/callback' do
         return "not text" unless event.type === Line::Bot::Event::MessageType::Text
         return "not command" unless command?(event.message['text'])
 
-        search_result = search_image_url("花火")
+        query = parameter(event.message['text']).join(' ')
+
+        search_result = search_image_url(query)
 
         image = {
             "type": "image",
