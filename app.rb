@@ -50,6 +50,8 @@ post '/callback' do
 
         query = parameter(event.message['text']).join(' ')
 
+        p query
+
         search_result = search_image_url(query)
 
         image = {
